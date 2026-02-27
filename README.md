@@ -13,3 +13,22 @@
 
 // boolean gives true for result, if not false
 
+# USECASE3
+
+// input text traversed  from the end
+
+// reveresed string is compared with the input string
+
+//result returns true else false
+
+# USECASE4
+
+//input text is converted into character array
+
+//compares characters from the beginning and ending 
+
+# USECASE5 
+
+//each character of input text is pushed into stack 
+
+//pop each character in the stack in reverse
