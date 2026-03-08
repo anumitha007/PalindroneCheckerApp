@@ -32,3 +32,7 @@
 //each character of input text is pushed into stack 
 
 //pop each character in the stack in reverse
+
+#USECASE6
+
+//
