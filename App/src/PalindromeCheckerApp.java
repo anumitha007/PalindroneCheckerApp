@@ -2,12 +2,9 @@ import java.util.Stack;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-interface PalindromeStrategy {
-    boolean checkPalindrome(String word);
-}
+public class PalindromeCheckerApp {
 
-class StackStrategy implements PalindromeStrategy {
-    public boolean checkPalindrome(String word) {
+    public static boolean stackPalindrome(String word) {
         Stack<Character> stack = new Stack<>();
 
         for (int i = 0; i < word.length(); i++) {
@@ -22,10 +19,8 @@ class StackStrategy implements PalindromeStrategy {
 
         return true;
     }
-}
 
-class DequeStrategy implements PalindromeStrategy {
-    public boolean checkPalindrome(String word) {
+    public static boolean dequePalindrome(String word) {
         Deque<Character> deque = new ArrayDeque<>();
 
         for (int i = 0; i < word.length(); i++) {
@@ -40,23 +35,45 @@ class DequeStrategy implements PalindromeStrategy {
 
         return true;
     }
-}
 
-public class PalindromeCheckerApp {
+    public static boolean arrayPalindrome(String word) {
+        int start = 0;
+        int end = word.length() - 1;
+
+        while (start < end) {
+            if (word.charAt(start) != word.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
 
         String word = "madam";
 
-        PalindromeStrategy strategy;
+        long startTime;
+        long endTime;
 
-        strategy = new StackStrategy();
-        // strategy = new DequeStrategy();  // switch algorithm here
+        startTime = System.nanoTime();
+        boolean stackResult = stackPalindrome(word);
+        endTime = System.nanoTime();
+        System.out.println("Stack Result: " + stackResult);
+        System.out.println("Stack Time: " + (endTime - startTime) + " ns");
 
-        if (strategy.checkPalindrome(word)) {
-            System.out.println(word + " is a palindrome");
-        } else {
-            System.out.println(word + " is not a palindrome");
-        }
+        startTime = System.nanoTime();
+        boolean dequeResult = dequePalindrome(word);
+        endTime = System.nanoTime();
+        System.out.println("Deque Result: " + dequeResult);
+        System.out.println("Deque Time: " + (endTime - startTime) + " ns");
+
+        startTime = System.nanoTime();
+        boolean arrayResult = arrayPalindrome(word);
+        endTime = System.nanoTime();
+        System.out.println("Array Result: " + arrayResult);
+        System.out.println("Array Time: " + (endTime - startTime) + " ns");
     }
 }
