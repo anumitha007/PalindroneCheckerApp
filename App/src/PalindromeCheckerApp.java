@@ -1,17 +1,41 @@
-class PalindromeChecker {
+import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
+interface PalindromeStrategy {
+    boolean checkPalindrome(String word);
+}
+
+class StackStrategy implements PalindromeStrategy {
     public boolean checkPalindrome(String word) {
-        char[] chars = word.toLowerCase().toCharArray();
+        Stack<Character> stack = new Stack<>();
 
-        int start = 0;
-        int end = chars.length - 1;
+        for (int i = 0; i < word.length(); i++) {
+            stack.push(word.charAt(i));
+        }
 
-        while (start < end) {
-            if (chars[start] != chars[end]) {
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
+        }
+
+        return true;
+    }
+}
+
+class DequeStrategy implements PalindromeStrategy {
+    public boolean checkPalindrome(String word) {
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (int i = 0; i < word.length(); i++) {
+            deque.addLast(word.charAt(i));
+        }
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
         }
 
         return true;
@@ -21,11 +45,15 @@ class PalindromeChecker {
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
-        String word = "Level";
 
-        PalindromeChecker checker = new PalindromeChecker();
+        String word = "madam";
 
-        if (checker.checkPalindrome(word)) {
+        PalindromeStrategy strategy;
+
+        strategy = new StackStrategy();
+        // strategy = new DequeStrategy();  // switch algorithm here
+
+        if (strategy.checkPalindrome(word)) {
             System.out.println(word + " is a palindrome");
         } else {
             System.out.println(word + " is not a palindrome");
